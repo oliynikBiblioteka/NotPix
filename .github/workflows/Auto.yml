@@ -1,8 +1,8 @@
-name: "Auto NotPix Krutkij"
+name: "Auto NotPix"
 
 on:
   schedule:
-    - cron: "33 19-22 * * *"  # Minute/Hour/Day/Month/Weekday (UTC)
+    - cron: "0 12 * * *"  # Minute/Hour/Day/Month/Weekday (UTC)
   workflow_dispatch:
 permissions:
   contents: write
@@ -20,15 +20,19 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.11
-          
+
       - name: Copy file from another location
         run: |
-          cp sessionsMain/accountsKrutkij.json sessions/accounts.json
           cp sessionsMain/Krutkij.session sessions/Krutkij.session
-
+          cp sessionsMain/Orange.session sessions/Orange.session
+          cp sessionsMain/Toxxa.session sessions/Toxxa.session
+          cp sessionsMain/accounts.json sessions/accounts.json
+          cp bot/config/configLongTime.py bot/config/config.py 
+          cp -f MainOriginal.py main.py
+          ls sessions/
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           python3 ./main.py -a 1
-          
+          timeout-minutes: 580
