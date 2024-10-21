@@ -2,10 +2,12 @@ import asyncio
 from contextlib import suppress
 from bot.utils import logger
 from bot.utils.launcher import process
-
+import requests
 
 async def main():
     try:
+        external_ip = requests.get('https://api.ipify.org').text
+        print(f"Ваша зовнішня IP-адреса: {external_ip}")
         await asyncio.wait_for(process(), timeout=150.0)  # Тайм-аут 10 секунд
     except asyncio.TimeoutError:
         logger.warning("<r>Bot stopped due to timeout...</r>")
